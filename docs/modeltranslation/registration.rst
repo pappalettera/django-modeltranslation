@@ -14,6 +14,8 @@ steps:
 2. Create a translation option class for every model to translate.
 3. Register the model and the translation option class at
    ``modeltranslation.translator.translator``.
+4. Trigger the creation of new migrations and then synchronize the database.
+
 
 The modeltranslation application reads the ``translation.py`` file in your
 app directory thereby triggering the registration of the translation
@@ -44,6 +46,12 @@ following::
         fields = ('title', 'text',)
 
     translator.register(News, NewsTranslationOptions)
+
+Run ``makemigrations`` and ``migrate`` commands, to make the ``News`` model be aligned with the required translatable fields:
+
+    python manage.py makemigrations to create a new migration with the added or removed fields.
+    python manage.py migrate to apply the changes.
+
 
 Note that this does not require to change the ``News`` model in any way, it's
 only imported. The ``NewsTranslationOptions`` derives from
